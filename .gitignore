@@ -91,3 +91,5 @@ frameworks/runtime-src/proj.win32/Debug.win32/libogg.dll
 frameworks/runtime-src/proj.win32/Debug.win32/libmpg123.lib
 frameworks/runtime-src/proj.win32/Debug.win32/libcrypto-1_1.dll
 frameworks/runtime-src/proj.win32/.vs/DarkSlash/v15/ipch/AutoPCH/f80fdfdf954390d3/SIMULATORWIN.ipch
+frameworks/runtime-src/proj.win32/.vs/
+frameworks/runtime-src/proj.win32/Debug.win32/
