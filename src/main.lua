@@ -6,7 +6,7 @@ require "cocos.init"
 
 local function main()
    -- require("app.MyApp"):create():run()
-    dump(cc.disable_global)
+   -- dump(cc.disable_global)
     cc.FileUtils:getInstance():addSearchPath('res/creator')
     
     local creatorReader = creator.CreatorReader:createWithFilename ('scenes/StartGame.ccreator')
@@ -15,9 +15,16 @@ local function main()
     
     local function onSceneEvent(event)
         if event == "enter" then
-            
-            local child = myscene:getChildByName ('Canvas'):getChildByName ('menuAnim')      
-            local temp = creatorReader:getAnimationManager ()       
+--            for k, v in pairs( getmetatable(myscene:getChildByName ('Canvas'):getChildByName ('menuAnim'):getChildByName('btnGroups'))) do
+--                 print(k, v)
+--            end
+--            myscene:getChildByName ('Canvas'):getChildByName ('menuAnim'):getChildByName('btnGroups'):pause()
+--            local child = myscene:getChildByName ('Canvas'):getChildByName ('menuAnim')      
+--            local temp = creatorReader:getAnimationManager ()   
+
+           -- dump(myscene:getChildByName ('Canvas'):getChildByName ('menuAnim'):getChildByName('btnGroups'))
+           -- myscene:getChildByName ('Canvas'):getChildByName ('menuAnim'):getChildByName('btnGroups'):runAction(cc.MoveTo:create(2,cc.p(900,0)))
+           -- cc.Director:getInstance():getActionManager():pauseTarget(myscene:getChildByName ('Canvas'):getChildByName('menuAnim'):getChildByName('btnGroups'));
 --            local co = coroutine.create (function ()
 --                print(11)
 --                local lable = cc.Label:createWithSystemFont (os.time ()
@@ -35,13 +42,39 @@ local function main()
 --                print(k, v)
 --           end
 
-            local callbackEntry
-            callbackEntry = cc.Director:getInstance():getScheduler():scheduleScriptFunc(function(dt)  
-                temp:playAnimationClip (child, "menuAnim") 
-                cc.Director:getInstance ():getScheduler ():unscheduleScriptEntry (callbackEntry)
-            end, 0.5, false)
+--            local callbackEntry   
+--            callbackEntry = cc.Director:getInstance():getScheduler():scheduleScriptFunc(function(dt)  
+--                temp:playAnimationClip (child, "menuAnim") --??????
+----                for k, v in pairs( getmetatable(temp)) do
+----                     print(k, v)
+----                end
+--                local registerBtnSche
+--                registerBtnSche = cc.Director:getInstance():getScheduler():scheduleScriptFunc(function(dt)
 
-
+--                    cc.Director:getInstance ():getScheduler ():unscheduleScriptEntry (registerBtnSche)
+--                end,3.5,false)
+--                cc.Director:getInstance ():getScheduler ():unscheduleScriptEntry (callbackEntry)
+--            end, 0.5, false)
+            local temp = creatorReader:getAnimationManager () 
+            local child = myscene:getChildByName ('Canvas'):getChildByName ('menuAnim') 
+            child:runAction(cc.Sequence:create(cc.DelayTime:create(0.2),cc.CallFunc:create(function()
+                temp:playAnimationClip(child,"menuAnim")
+            end),cc.DelayTime:create(1.0),cc.CallFunc:create(function()
+               local btnGroups =  child:getChildByName('btnGroups')
+               local btnPlay = btnGroups:getChildByName('btn_play')
+               btnPlay:addTouchEventListener(function(sender,eventType)
+                     if eventType == ccui.TouchEventType.began then
+                          print("????")
+                     elseif eventType == ccui.TouchEventType.moved then
+                          print("??????")
+                     elseif eventType == ccui.TouchEventType.ended then
+                         btnPlay:setTouchEnabled(false)	
+                     elseif eventType == ccui.TouchEventType.canceled then
+                         print("????")
+                     end
+               
+               end)
+            end)))
         elseif event == "enterTransitionFinish" then
         -- dump(cc.FileUtils:getInstance():getSearchPaths())
         elseif event == "exit" then
@@ -53,11 +86,11 @@ local function main()
         end
     end
     myscene:registerScriptHandler(onSceneEvent)
-     for k, v in pairs( getmetatable(myscene:getChildByName('Canvas'))) do
-          print(k, v)
-     end
+--     for k, v in pairs( getmetatable(myscene:getChildByName('Canvas'))) do
+--          print(k, v)
+--     end
    -- myscene:getChildByName('Canvas'):setScale(0.2)
-    cc.Director:getInstance ():replaceScene (myscene)
+    cc.Director:getInstance():replaceScene (myscene)
 end
 
 local status, msg = xpcall(main, __G__TRACKBACK__)
