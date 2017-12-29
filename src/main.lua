@@ -82,7 +82,7 @@ local function main()
         elseif event == "exitTransitionStart" then
 
         elseif event == "cleanup" then
-             print("111")
+
         end
     end
     myscene:registerScriptHandler(onSceneEvent)
