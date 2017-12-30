@@ -64,13 +64,13 @@ local function main()
                local btnPlay = btnGroups:getChildByName('btn_play')
                btnPlay:addTouchEventListener(function(sender,eventType)
                      if eventType == ccui.TouchEventType.began then
-                          print("????")
+                          print("begin")
                      elseif eventType == ccui.TouchEventType.moved then
-                          print("??????")
+                          print("moved")
                      elseif eventType == ccui.TouchEventType.ended then
                          btnPlay:setTouchEnabled(false)	
                      elseif eventType == ccui.TouchEventType.canceled then
-                         print("????")
+                         print("canceled")
                      end
                
                end)
